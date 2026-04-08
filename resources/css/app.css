@@ -1,11 +1,343 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+@source '../**/*.jsx';
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-brand-navy: #34447a;
+    --color-brand-sky: #82a6cb;
+    --color-brand-navy-dark: #28365f;
+}
+
+/* ─── Login: architect / blueprint animated background ─── */
+@keyframes login-arch-drift {
+    from {
+        background-position: 0 0, 0 0;
+    }
+    to {
+        background-position: 36px 36px, 36px 36px;
+    }
+}
+
+@keyframes login-arch-drift-rev {
+    from {
+        background-position: 0 0, 0 0;
+    }
+    to {
+        background-position: -120px -120px, -120px -120px;
+    }
+}
+
+@keyframes login-arch-beam-spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes login-arch-glow-pulse {
+    0%,
+    100% {
+        opacity: 0.85;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes login-arch-frame-1 {
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(-8deg);
+        opacity: 0.35;
+    }
+    50% {
+        transform: translate(10px, -14px) rotate(-6deg);
+        opacity: 0.55;
+    }
+}
+
+@keyframes login-arch-frame-2 {
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(18deg);
+        opacity: 0.28;
+    }
+    50% {
+        transform: translate(-12px, 10px) rotate(20deg);
+        opacity: 0.48;
+    }
+}
+
+@keyframes login-arch-frame-3 {
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(3deg) scale(1);
+        opacity: 0.22;
+    }
+    50% {
+        transform: translate(6px, 8px) rotate(5deg) scale(1.02);
+        opacity: 0.4;
+    }
+}
+
+@keyframes login-arch-corner-shift {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(24px, 24px);
+    }
+}
+
+.login-arch-layer-grid {
+    background-image:
+        linear-gradient(to right, rgb(52 68 122 / 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgb(52 68 122 / 0.07) 1px, transparent 1px);
+    background-size: 36px 36px;
+    animation: login-arch-drift 26s linear infinite;
+}
+
+.dark .login-arch-layer-grid {
+    background-image:
+        linear-gradient(to right, rgb(130 166 203 / 0.09) 1px, transparent 1px),
+        linear-gradient(to bottom, rgb(130 166 203 / 0.09) 1px, transparent 1px);
+}
+
+.login-arch-layer-grid-major {
+    background-image:
+        linear-gradient(to right, rgb(52 68 122 / 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgb(52 68 122 / 0.045) 1px, transparent 1px);
+    background-size: 120px 120px;
+    animation: login-arch-drift-rev 55s linear infinite;
+}
+
+.dark .login-arch-layer-grid-major {
+    background-image:
+        linear-gradient(to right, rgb(130 166 203 / 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgb(130 166 203 / 0.06) 1px, transparent 1px);
+}
+
+.login-arch-beams {
+    background: repeating-linear-gradient(
+        118deg,
+        transparent 0px,
+        transparent 72px,
+        rgb(52 68 122 / 0.04) 72px,
+        rgb(52 68 122 / 0.04) 74px
+    );
+    animation: login-arch-beam-spin 140s linear infinite;
+}
+
+.dark .login-arch-beams {
+    background: repeating-linear-gradient(
+        118deg,
+        transparent 0px,
+        transparent 72px,
+        rgb(130 166 203 / 0.06) 72px,
+        rgb(130 166 203 / 0.06) 74px
+    );
+}
+
+.login-arch-glow-a {
+    animation: login-arch-glow-pulse 14s ease-in-out infinite;
+}
+
+.login-arch-glow-b {
+    animation: login-arch-glow-pulse 18s ease-in-out infinite 3s;
+}
+
+.login-arch-frame {
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+.login-arch-frame--1 {
+    left: 6%;
+    top: 18%;
+    width: 220px;
+    height: 140px;
+    animation: login-arch-frame-1 16s ease-in-out infinite;
+}
+
+.login-arch-frame--2 {
+    right: 4%;
+    bottom: 22%;
+    width: 280px;
+    height: 180px;
+    animation: login-arch-frame-2 22s ease-in-out infinite 2s;
+}
+
+.login-arch-frame--3 {
+    left: 42%;
+    top: 8%;
+    width: 160px;
+    height: 100px;
+    animation: login-arch-frame-3 12s ease-in-out infinite 1s;
+}
+
+.login-arch-corner-fill {
+    animation: login-arch-corner-shift 40s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .login-arch-layer-grid,
+    .login-arch-layer-grid-major,
+    .login-arch-beams,
+    .login-arch-glow-a,
+    .login-arch-glow-b,
+    .login-arch-frame--1,
+    .login-arch-frame--2,
+    .login-arch-frame--3,
+    .login-arch-corner-fill {
+        animation: none !important;
+    }
+}
+
+/* ─── Dashboard entrance (after login) ─── */
+@keyframes dashboard-shell-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes dashboard-header-in {
+    from {
+        opacity: 0;
+        transform: translateY(-18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes dashboard-logo-in {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes dashboard-main-in {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes dashboard-stat-in {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dashboard-enter-shell {
+    animation: dashboard-shell-in 0.4s ease-out both;
+}
+
+.dashboard-enter-header {
+    animation: dashboard-header-in 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.dashboard-enter-logo {
+    animation: dashboard-logo-in 0.48s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
+}
+
+.dashboard-enter-card {
+    animation: dashboard-main-in 0.58s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+
+.dashboard-enter-stat {
+    animation: dashboard-stat-in 0.48s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.dashboard-enter-stat:nth-child(1) {
+    animation-delay: 0.14s;
+}
+
+.dashboard-enter-stat:nth-child(2) {
+    animation-delay: 0.22s;
+}
+
+.dashboard-enter-stat:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dashboard-enter-shell,
+    .dashboard-enter-header,
+    .dashboard-enter-logo,
+    .dashboard-enter-card,
+    .dashboard-enter-stat {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* Login flow: full-screen welcome step (between login and dashboard) */
+@keyframes welcome-step-card-in {
+    from {
+        transform: translateY(22px) scale(0.97);
+    }
+    to {
+        transform: translateY(0) scale(1);
+    }
+}
+
+.welcome-step-card {
+    opacity: 1;
+    animation: welcome-step-card-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes welcome-step-progress-fill {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+.welcome-step-progress {
+    width: 0%;
+    animation: welcome-step-progress-fill 2.9s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .welcome-step-card {
+        animation: none !important;
+        transform: none !important;
+    }
+
+    .welcome-step-progress {
+        animation: none !important;
+        width: 100% !important;
+    }
 }
