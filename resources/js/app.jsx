@@ -1,6 +1,7 @@
 import './bootstrap';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import RootApp from './RootApp.jsx';
 import { ThemeProvider } from './theme/ThemeProvider.jsx';
 
@@ -11,7 +12,9 @@ if (rootElement) {
     root.render(
         <React.StrictMode>
             <ThemeProvider>
-                <RootApp />
+                <BrowserRouter>
+                    <RootApp />
+                </BrowserRouter>
             </ThemeProvider>
         </React.StrictMode>,
     );

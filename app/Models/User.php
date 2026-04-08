@@ -26,6 +26,7 @@ class User extends Authenticatable
         'fullname',
         'image',
         'role',
+        'archived_at',
         'name',
         'password',
     ];
@@ -50,6 +51,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'archived_at' => 'datetime',
         ];
     }
 

@@ -17,6 +17,12 @@
     --color-brand-navy-dark: #28365f;
 }
 
+@layer base {
+    button:not(:disabled):not([disabled]) {
+        cursor: pointer;
+    }
+}
+
 /* ─── Login: architect / blueprint animated background ─── */
 @keyframes login-arch-drift {
     from {

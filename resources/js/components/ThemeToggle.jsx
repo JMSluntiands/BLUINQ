@@ -4,6 +4,8 @@ import { useTheme } from '../theme/ThemeProvider.jsx';
 
 export default function ThemeToggle({ className = '' }) {
     const { theme, setTheme } = useTheme();
+    const isDark = theme === 'dark';
+    const ActiveIcon = isDark ? Moon : Sun;
 
     return (
         <div
@@ -13,29 +15,17 @@ export default function ThemeToggle({ className = '' }) {
         >
             <button
                 type="button"
-                onClick={() => setTheme('light')}
-                aria-label="Light mode"
-                aria-pressed={theme === 'light'}
-                className={`rounded-[10px] p-2.5 transition ${
-                    theme === 'light'
-                        ? 'bg-brand-navy text-white shadow-sm dark:bg-brand-sky dark:text-slate-950'
-                        : 'text-slate-600 hover:bg-slate-100 hover:text-brand-navy dark:text-slate-400 dark:hover:bg-slate-700/60 dark:hover:text-slate-200'
-                }`}
+                onClick={() => setTheme(isDark ? 'light' : 'dark')}
+                aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                aria-pressed={isDark}
+                className="rounded-[10px] p-2.5 text-slate-700 transition-transform duration-300 hover:scale-[1.03] hover:bg-slate-100/80 hover:text-brand-navy dark:text-slate-200 dark:hover:bg-slate-800/60 dark:hover:text-brand-sky"
             >
-                <Sun className="h-5 w-5" strokeWidth={2} aria-hidden />
-            </button>
-            <button
-                type="button"
-                onClick={() => setTheme('dark')}
-                aria-label="Dark mode"
-                aria-pressed={theme === 'dark'}
-                className={`rounded-[10px] p-2.5 transition ${
-                    theme === 'dark'
-                        ? 'bg-brand-navy text-white shadow-sm dark:bg-brand-sky dark:text-slate-950'
-                        : 'text-slate-600 hover:bg-slate-100 hover:text-brand-navy dark:text-slate-400 dark:hover:bg-slate-700/60 dark:hover:text-slate-200'
-                }`}
-            >
-                <Moon className="h-5 w-5" strokeWidth={2} aria-hidden />
+                <ActiveIcon
+                    key={theme}
+                    className="h-5 w-5 animate-[spin_.35s_ease]"
+                    strokeWidth={2}
+                    aria-hidden
+                />
             </button>
         </div>
     );

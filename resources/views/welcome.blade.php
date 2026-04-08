@@ -32,18 +32,5 @@
             </div>
         </noscript>
 
-        <script>
-            setTimeout(function () {
-                var el = document.getElementById('app');
-                if (!el || el.textContent.indexOf('Loading BLUINQ') === -1) return;
-                el.innerHTML =
-                    '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;font-family:system-ui,sans-serif;font-size:14px;color:#475569;text-align:center;line-height:1.6">' +
-                    '<div style="max-width:32rem">' +
-                    '<p style="margin:0 0 12px;font-weight:600;color:#34447a">Hindi nag-load ang app (stuck sa Loading).</p>' +
-                    '<p style="margin:0 0 12px">Kadalasang dahilan: may <code style="background:#f1f5f9;padding:2px 8px;border-radius:6px">public/hot</code> pero hindi tumatakbo ang Vite (<code style="background:#f1f5f9;padding:2px 8px;border-radius:6px">npm run dev</code>).</p>' +
-                    '<p style="margin:0"><strong>Ayusin:</strong> burahin ang file <code style="background:#f1f5f9;padding:2px 8px;border-radius:6px">public/hot</code>, tapos <code style="background:#f1f5f9;padding:2px 8px;border-radius:6px">npm run build</code> — o patakbuhin nang sabay ang <code style="background:#f1f5f9;padding:2px 8px;border-radius:6px">php artisan serve</code> at <code style="background:#f1f5f9;padding:2px 8px;border-radius:6px">npm run dev</code>.</p>' +
-                    '</div></div>';
-            }, 6000);
-        </script>
     </body>
 </html>

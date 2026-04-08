@@ -3,9 +3,12 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "prebuild": "node -e \"try { require('fs').unlinkSync('public/hot'); } catch (e) {}\"",
         "build": "vite build",
-        "dev": "vite"
+        "build:watch": "vite build --watch",
+        "dev": "npm run clean:hot && vite build --watch",
+        "dev:hmr": "npm run dev",
+        "dev:stack": "concurrently -k -n laravel,watch -c cyan,magenta \"php artisan serve\" \"npm run dev\"",
+        "clean:hot": "node -e \"try { require('fs').unlinkSync('public/hot'); console.log('Removed public/hot'); } catch (e) { console.log('No public/hot file'); }\""
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
@@ -19,6 +22,7 @@
         "@vitejs/plugin-react-swc": "^4.3.0",
         "lucide-react": "^1.7.0",
         "react": "^19.2.4",
-        "react-dom": "^19.2.4"
+        "react-dom": "^19.2.4",
+        "react-router-dom": "^7.14.0"
     }
 }

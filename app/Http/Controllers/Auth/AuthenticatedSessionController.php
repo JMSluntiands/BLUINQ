@@ -63,7 +63,30 @@ class AuthenticatedSessionController extends Controller
     private function userPayload(Request $request): array
     {
         $user = $request->user();
+        $normalizedImagePath = $this->normalizeImagePath($user->image);
 
-        return $user->only(['id', 'name', 'email', 'username', 'fullname', 'role']);
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'username' => $user->username,
+            'fullname' => $user->fullname,
+            'role' => $user->role,
+            'image' => $normalizedImagePath,
+            'image_url' => $normalizedImagePath ? asset('storage/' . $normalizedImagePath) : null,
+        ];
+    }
+
+    private function normalizeImagePath(?string $path): ?string
+    {
+        if (! $path) {
+            return null;
+        }
+
+        $normalized = trim(str_replace('\\', '/', $path), '/');
+        $normalized = preg_replace('#^storage/#', '', $normalized);
+        $normalized = preg_replace('#^public/#', '', $normalized);
+
+        return $normalized ?: null;
     }
 }

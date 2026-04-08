@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import LoginArchitectBackground from '../components/LoginArchitectBackground.jsx';
 import ThemeToggle from '../components/ThemeToggle.jsx';
@@ -12,6 +12,18 @@ export default function LoginPage({ onSuccess }) {
     const [remember, setRemember] = useState(true);
     const [error, setError] = useState('');
     const [submitting, setSubmitting] = useState(false);
+    const [logoutNotice, setLogoutNotice] = useState('');
+
+    useEffect(() => {
+        try {
+            if (sessionStorage.getItem('bluinq_notice') === 'logged_out') {
+                sessionStorage.removeItem('bluinq_notice');
+                setLogoutNotice('You have been signed out.');
+            }
+        } catch {
+            /* ignore */
+        }
+    }, []);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -47,12 +59,18 @@ export default function LoginPage({ onSuccess }) {
             <div className="relative z-[1] w-full max-w-md">
                 <div className="rounded-3xl bg-white/90 backdrop-blur-md shadow-xl shadow-brand-navy/10 border border-white/80 px-8 py-10 sm:px-10 dark:bg-slate-900/90 dark:border-slate-700/80 dark:shadow-black/40">
                     <div className="flex flex-col items-center text-center mb-8">
-                        <div className="mb-6 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-brand-navy/5 dark:bg-slate-800 dark:ring-slate-600/60">
-                            <img
-                                src="/img/logo.jpg"
-                                alt="BLUINQ"
-                                className="h-12 w-auto max-w-[200px] object-contain"
-                            />
+                        <div className="mb-6 w-full max-w-[260px] rounded-2xl border border-brand-navy/10 bg-gradient-to-r from-[#0A1428] to-[#122849] p-3 shadow-lg shadow-brand-navy/20 ring-1 ring-white/10">
+                            <div className="flex items-center gap-2.5">
+                                <img
+                                    src="/img/logo.jpg"
+                                    alt="BLUINQ"
+                                    className="h-10 w-auto shrink-0 rounded-sm object-contain"
+                                />
+                                <div className="min-w-0 text-left">
+                                    <p className="truncate text-lg font-semibold tracking-wide text-white">BLUINQ</p>
+                                    <p className="truncate text-sm font-medium text-brand-sky">Dashboard</p>
+                                </div>
+                            </div>
                         </div>
                         <p className="text-xs font-medium uppercase tracking-[0.2em] text-brand-sky dark:text-brand-sky">
                             Step 1 of 3
@@ -66,6 +84,14 @@ export default function LoginPage({ onSuccess }) {
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-5" autoComplete="off">
+                        {logoutNotice ? (
+                            <div
+                                className="rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900 dark:border-emerald-800/60 dark:bg-emerald-950/40 dark:text-emerald-100"
+                                role="status"
+                            >
+                                {logoutNotice}
+                            </div>
+                        ) : null}
                         {error ? (
                             <div
                                 className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800 dark:border-red-900/60 dark:bg-red-950/50 dark:text-red-200"
